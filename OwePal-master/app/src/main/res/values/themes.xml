@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme"
+           parent="@style/Theme.AppCompat">
+        <item name="android:activatedBackgroundIndicator">@drawable/list_item_background</item>
+    </style>
+
+</resources>
