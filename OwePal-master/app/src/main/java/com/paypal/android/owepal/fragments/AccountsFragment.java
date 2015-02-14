@@ -1,6 +1,9 @@
 package com.paypal.android.owepal.fragments;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,25 +13,24 @@ import android.view.ViewGroup;
 
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-import com.paypal.android.owepal.data.DummyContent;
+import android.widget.Toast;
+
+import com.paypal.android.owepal.R;
+import com.paypal.android.owepal.data.DemoContent;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountsFragment extends Fragment
+public class AccountsFragment extends ListFragment
 
-        implements AbsListView.OnItemClickListener{
-
+//        implements AbsListView.OnItemClickListener{
+//implements AdapterView.OnItemClickListener{
+{
 
     public AccountsFragment() {
         // Required empty public constructor
@@ -45,11 +47,12 @@ public class AccountsFragment extends Fragment
         View view = inflater.inflate(com.paypal.android.owepal.R.layout.fragment_accounts, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+//        mListView.setOnItemClickListener(this);
+//        mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -97,8 +100,8 @@ public class AccountsFragment extends Fragment
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new ArrayAdapter<DemoContent.DummyItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, DemoContent.ITEMS);
     }
 
     @Override
@@ -119,13 +122,81 @@ public class AccountsFragment extends Fragment
     }
 
 
+//    @Override
+//         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        if (null != mListener) {
+//            // Notify the active callbacks interface (the activity, if the
+//            // fragment is attached to one) that an item has been selected.
+//            mListener.onFragmentInteraction(DemoContent.ITEMS.get(position).id);
+//            Toast.makeText(getActivity(), "Item clicked :: " + position, Toast.LENGTH_SHORT).show();
+////            Log.v("Clicked ITEM", "Item position :: " + position);
+//        }
+//    }
+
+
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onListItemClick(ListView l, View v, int position, long id) {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(DemoContent.ITEMS.get(position).id);
+            Toast.makeText(getActivity(), "Item clicked :: " + position, Toast.LENGTH_SHORT).show();
+//            Log.v("Clicked ITEM", "Item position :: " + position);
+            showDetails(position);
         }
+    }
+    /**
+     * Helper function to show the details of a selected item, either by
+     * displaying a fragment in-place in the current UI, or starting a
+     * whole new activity in which it is displayed.
+     */
+    void showDetails(int index) {
+////        mCurCheckPosition = index;
+//
+////        if (mDualPane) {
+//            // We can display everything in-place with fragments, so update
+//            // the list to highlight the selected item and show the data.
+//            getListView().setItemChecked(index, true);
+
+            // Check what fragment is currently shown, replace if needed.
+//            AccountDetailsFragment details = (AccountDetailsFragment)
+//                    getFragmentManager().findFragmentById(R.id.content_frame);
+////            if (details == null || details.getShownIndex() != index) {
+//                // Make new fragment to show this selection.
+////                details = AccountDetailsFragment.newInstance("param1", "param2");
+//
+//                // Execute a transaction, replacing any existing fragment
+//                // with this one inside the frame.
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+////                if (index == 0) {
+//                    ft.replace(R.id.content_frame, details);
+////                } else {
+////                    ft.replace(R.id.content_frame, details);
+////                }
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//                ft.commit();
+//            }
+//
+//        } else {
+//            // Otherwise we need to launch a new activity to display
+//            // the dialog fragment with selected text.
+//            Intent intent = new Intent();
+//            intent.setClass(getActivity(), DetailsActivity.class);
+//            intent.putExtra("index", index);
+//            startActivity(intent);
+//        }
+
+        // Create new fragment and transaction
+        Fragment newFragment = new AccountDetailsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack
+        transaction.replace(R.id.content_frame, newFragment,"fragBack");
+        transaction.addToBackStack("fragBack");
+
+// Commit the transaction
+        transaction.commit();
     }
 
     /**
@@ -141,6 +212,17 @@ public class AccountsFragment extends Fragment
         }
     }
 
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////                if (null != mListener) {
+////            // Notify the active callbacks interface (the activity, if the
+////            // fragment is attached to one) that an item has been selected.
+////            mListener.onFragmentInteraction(DemoContent.ITEMS.get(position).id);
+////            Toast.makeText(getActivity(), "Item clicked :: " + position, Toast.LENGTH_SHORT).show();
+//////            Log.v("Clicked ITEM", "Item position :: " + position);
+////        }
+//    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -155,4 +237,16 @@ public class AccountsFragment extends Fragment
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        if (getFragmentManager().findFragmentByTag("FragmentC") != null) {
+//            // I'm viewing Fragment C
+//            ge().popBackStack("A_B_TAG",
+//                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+
 }

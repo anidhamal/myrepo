@@ -12,17 +12,12 @@ import com.paypal.android.owepal.R;
 
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import com.paypal.android.owepal.data.DummyContent;
+import com.paypal.android.owepal.data.DemoContent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,8 +92,8 @@ public class HistoryFragment extends Fragment
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new ArrayAdapter<DemoContent.DummyItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, DemoContent.ITEMS);
     }
 
     @Override
@@ -124,7 +119,7 @@ public class HistoryFragment extends Fragment
 //        if (null != mListener) {
 //            // Notify the active callbacks interface (the activity, if the
 //            // fragment is attached to one) that an item has been selected.
-//            mListener.onHistoryFragmentInteraction(DummyContent.ITEMS.get(position).id);
+//            mListener.onHistoryFragmentInteraction(DemoContent.ITEMS.get(position).id);
 //        }
     }
 

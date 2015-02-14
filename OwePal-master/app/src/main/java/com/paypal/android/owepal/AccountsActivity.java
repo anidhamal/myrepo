@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,7 +13,9 @@ import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.paypal.android.owepal.fragments.AccountDetailsFragment;
 import com.paypal.android.owepal.fragments.AccountsFragment;
 import com.paypal.android.owepal.fragments.HistoryFragment;
 
@@ -179,6 +182,28 @@ public class AccountsActivity extends ActionBarActivity
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag("fragBack") != null) {
+
+        }
+        else {
+            super.onBackPressed();
+            return;
+        }
+        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+            Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_LONG).show();
+//            Fragment frag = getSupportFragmentManager().findFragmentByTag("fragBack");
+//            Fragment newFragment = new AccountDetailsFragment();
+//            FragmentTransaction transac = getFragmentManager().beginTransaction().remove(frag);
+
+//            FragmentManager fragmentManager = getFragmentManager();
+//            fragmentManager.beginTransaction().re(R.id.content_frame, fragment).commit();
+//            transac.commit();
+        }
+
     }
 
     @Override
